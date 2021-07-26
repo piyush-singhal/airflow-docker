@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13.1
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/data/postgres
+      
+  web:
+    build: .
+    image: piyush/airflow-2.1.0
+    env_file:
+      - .env
+    ports:
+    - "8080:8080"
+    depends_on:
+    - postgres
+    volumes:
+      - ./dags:/opt/airflow/dags
+
+volumes:
+    postgres:
