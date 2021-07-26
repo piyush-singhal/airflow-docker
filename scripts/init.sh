@@ -10,6 +10,10 @@ export AIRFLOW__CORE__SQL_ALCHEMY_CONN="postgresql+psycopg2://${DB_USER}:${DB_PA
 
 # Airflow DB Initialize
 airflow db upgrade
+
+# Create Admin User
+airflow users create -r Admin -u "$ADMIN_USERNAME" -e "$ADMIN_EMAIL" -f "$ADMIN_FIRSTNAME" -l "$ADMIN_LASTNAME" -p "$ADMIN_PASSWORD"
+
 # Start scheduler 
 airflow scheduler &
 # Run webserver
